@@ -84,7 +84,7 @@ CREATE TABLE customer_address (
 
 -- shipping_method table
 CREATE TABLE shipping_method (
-    shipping_method_id INT AUTO_INCREMENT PRIMARY KEY,
+    shipping_id INT AUTO_INCREMENT PRIMARY KEY,
     method_name VARCHAR(100)    
 );
 
@@ -101,8 +101,7 @@ CREATE TABLE cust_order (
     order_date DATETIME DEFAULT CURRENT_TIMESTAMP,
     shipping_id INT,
     FOREIGN KEY (customer_id) REFERENCES customer(customer_id),
-    FOREIGN KEY (shipping_method_id) REFERENCES shipping_method(shipping_method_id),
-    FOREIGN KEY (order_status_id) REFERENCES order_status(status_id)
+    FOREIGN KEY (shipping_id) REFERENCES shipping_method(shipping_id)
 );
 
 -- order_line table
