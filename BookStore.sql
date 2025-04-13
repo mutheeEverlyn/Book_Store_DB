@@ -21,6 +21,7 @@ CREATE TABLE book (
     publisher_id INT,
     language_id INT,
     price DECIMAL(10,2),
+    published_year
     FOREIGN KEY (publisher_id) REFERENCES publisher(publisher_id),
     FOREIGN KEY (language_id) REFERENCES book_language(language_id)
 );
