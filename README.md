@@ -1,5 +1,5 @@
 ﻿# bookstore_db
-![bookstore ERD](https://github.com/mutheeEverlyn/Book_Store_DB/blob/ef406f067fcea35a22299833a45c45edac8a67cf/bookstore.PNG)
+![bookstore ERD](https://github.com/mutheeEverlyn/Book_Store_DB/blob/0c9d85654b2ba015ad7887e8f54acdf3fd0328b6/bookstore.PNG)
 
 ## Contributors
 
