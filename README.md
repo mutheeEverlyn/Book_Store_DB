@@ -8,13 +8,6 @@
 	<tbody>
 		<tr>
             <td align="center">
-                <a href="https://github.com/mutheeEverlyn">
-                    <img src="https://avatars.githubusercontent.com/u/189024612?v=4" width="100;" alt="mutheeEverlyn"/>
-                    <br />
-                    <sub><b>mutheeEverlyn</b></sub>
-                </a>
-            </td>
-            <td align="center">
                 <a href="https://github.com/RencyBoreh">
                     <img src="https://avatars.githubusercontent.com/u/147608409?v=4" width="100;" alt="RencyBoreh"/>
                     <br />
