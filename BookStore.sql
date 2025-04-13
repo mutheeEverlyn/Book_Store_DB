@@ -22,7 +22,7 @@ CREATE TABLE book (
     language_id INT,
     publisher_year YEAR,
     price DECIMAL(10,2),
-    published_year
+    published_year,
     FOREIGN KEY (publisher_id) REFERENCES publisher(publisher_id),
     FOREIGN KEY (language_id) REFERENCES book_language(language_id)
 );
@@ -44,23 +44,23 @@ CREATE TABLE book_author (
 );
 
 
--- Create Admin User with Full access
-CREATE USER 'admin_user'@'localhost' IDENTIFIED BY 'adminspass123!';
-GRANT ALL PRIVILEGES ON bookstore_db.* TO 'admin_user'@'localhost';
+-- Create Admin with Full access
+CREATE USER 'admin'@'localhost' IDENTIFIED BY 'adminpass123!';
+GRANT ALL PRIVILEGES ON bookstore_db.* TO 'admin'@'localhost';
 
--- Create Read-Only User: Can only view data
-CREATE USER 'readonly_user'@'localhost' IDENTIFIED BY 'ReadOnlyusers123!';
-GRANT SELECT ON bookstore_db.* TO 'readonly_user'@'localhost';
+-- Create user: Can only view data
+CREATE USER 'user'@'localhost' IDENTIFIED BY 'user123!';
+GRANT SELECT ON bookstore_db.* TO 'user'@'localhost';
 
--- Create Data Entry User who Can insert and update, but not delete
-CREATE USER 'entry_user'@'localhost' IDENTIFIED BY 'EntryPassword123!';
-GRANT SELECT, INSERT, UPDATE ON bookstore_db.* TO 'entry_user'@'localhost';
+-- Create Data Entry staff who Can insert and update, but not delete
+CREATE USER 'entry_staff'@'localhost' IDENTIFIED BY 'EntryPassword123!';
+GRANT SELECT, INSERT, UPDATE ON bookstore_db.* TO 'entry_staff'@'localhost';
 
 -- Create Shipping Staff who Can view and update shipping/order tables
-CREATE USER 'shipping_user'@'localhost' IDENTIFIED BY 'ShipstaffPass123!';
-GRANT SELECT, UPDATE ON bookstore_db.cust_order TO 'shipping_user'@'localhost';
-GRANT SELECT, UPDATE ON bookstore_db.order_status TO 'shipping_user'@'localhost';
-GRANT SELECT, INSERT ON bookstore_db.order_history TO 'shipping_user'@'localhost';
+CREATE USER 'shipping_staff'@'localhost' IDENTIFIED BY 'ShipstaffPass123!';
+GRANT SELECT, UPDATE ON bookstore_db.cust_order TO 'shipping_staff'@'localhost';
+GRANT SELECT, UPDATE ON bookstore_db.order_status TO 'shipping_staff'@'localhost';
+GRANT SELECT, INSERT ON bookstore_db.order_history TO 'shipping_staff'@'localhost';
 
 
 -- Inserting the  Languages
