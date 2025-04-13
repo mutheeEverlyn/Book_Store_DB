@@ -22,7 +22,6 @@ CREATE TABLE book (
     language_id INT,
     publisher_year YEAR,
     price DECIMAL(10,2),
-    published_year,
     FOREIGN KEY (publisher_id) REFERENCES publisher(publisher_id),
     FOREIGN KEY (language_id) REFERENCES book_language(language_id)
 );
@@ -43,6 +42,89 @@ CREATE TABLE book_author (
     FOREIGN KEY (author_id) REFERENCES author(author_id)
 );
 
+CREATE TABLE country (
+    country_id INT AUTO_INCREMENT PRIMARY KEY,
+    country_name VARCHAR(100) NOT NULL
+);
+
+-- address_status table
+CREATE TABLE address_status (
+    status_id INT AUTO_INCREMENT PRIMARY KEY,
+    status_description VARCHAR(50) NOT NULL
+);
+
+-- address table
+CREATE TABLE address (
+    address_id INT AUTO_INCREMENT PRIMARY KEY,
+    postal_code VARCHAR(20),
+    country_id INT,
+    town VARCHAR(100),
+    FOREIGN KEY (country_id) REFERENCES country(country_id)
+);
+
+-- customer table
+CREATE TABLE customer (
+    customer_id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(100),
+    last_name VARCHAR(100),
+    email VARCHAR(100) UNIQUE
+    
+    );
+
+-- customer_address table
+CREATE TABLE customer_address (
+    customer_id INT,
+    address_id INT,
+    status_id INT,
+    PRIMARY KEY (customer_id, address_id),
+    FOREIGN KEY (customer_id) REFERENCES customer(customer_id),
+    FOREIGN KEY (address_id) REFERENCES address(address_id),
+    FOREIGN KEY (status_id) REFERENCES address_status(status_id)
+);
+
+-- shipping_method table
+CREATE TABLE shipping_method (
+    shipping_method_id INT AUTO_INCREMENT PRIMARY KEY,
+    method_name VARCHAR(100)    
+);
+
+-- order_status table
+CREATE TABLE order_status (
+    status_id INT AUTO_INCREMENT PRIMARY KEY,
+    status_name VARCHAR(50)
+);
+
+-- cust_order table
+CREATE TABLE cust_order (
+    order_id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id INT,
+    order_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    shipping_id INT,
+    FOREIGN KEY (customer_id) REFERENCES customer(customer_id),
+    FOREIGN KEY (shipping_method_id) REFERENCES shipping_method(shipping_method_id),
+    FOREIGN KEY (order_status_id) REFERENCES order_status(status_id)
+);
+
+-- order_line table
+CREATE TABLE order_line (
+    order_line_id INT AUTO_INCREMENT PRIMARY KEY,
+    order_id INT,
+    book_id INT,
+    quantity INT,
+    price DECIMAL(10, 2),
+    FOREIGN KEY (order_id) REFERENCES cust_order(order_id),
+    FOREIGN KEY (book_id) REFERENCES book(book_id)
+);
+
+-- order_history table
+CREATE TABLE order_history (
+    history_id INT AUTO_INCREMENT PRIMARY KEY,
+    order_id INT,
+    status_id INT,
+    changed_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (order_id) REFERENCES cust_order(order_id),
+    FOREIGN KEY (status_id) REFERENCES order_status(status_id)
+);
 
 -- Create Admin with Full access
 CREATE USER 'admin'@'localhost' IDENTIFIED BY 'adminpass123!';
@@ -84,28 +166,28 @@ INSERT INTO book_author (book_id, author_id) VALUES (1, 1), (2, 2);
 INSERT INTO country (country_name) VALUES ('Kenya'), ('Canada');
 
 -- Insert Address Statuses
-INSERT INTO address_status (status_name) VALUES ('Current'), ('Old');
+INSERT INTO address_status (status_description) VALUES ('Current'), ('Old');
 
 -- Insert Addresses
-INSERT INTO address (street, city, state, postal_code, country_id)
-VALUES ('123 Jogoo Rd', 'Nairobi', 'Nairobi', '00200', 1),
-       ('316 Lake St', 'New York', 'NY', '10001', 2);
+INSERT INTO address (city, state, postal_code, country_id)
+VALUES ('Nairobi', 'Nairobi', '00200', 1),
+       ('New York', 'NY', '10001', 2);
 
 -- Insert a Customer
-INSERT INTO customer (first_name, last_name, email, phone)
-VALUES ('Rabby', 'Boreh', 'rabby@gmail.com', '0735272722');
+INSERT INTO customer (first_name, last_name, email)
+VALUES ('Rabby', 'Boreh', 'rabby@gmail.com');
 
 -- Link Customer to Address
 INSERT INTO customer_address (customer_id, address_id, status_id) VALUES (1, 1, 1);
 
 -- Insert Shipping Methods
-INSERT INTO shipping_method (method_name, cost) VALUES ('Standard', 10.00), ('Express', 12.00);
+INSERT INTO shipping_method (method_name) VALUES ('Standard'), ('Express';
 
 -- Insert Order Statuses
 INSERT INTO order_status (status_name) VALUES ('Pending'), ('Shipped'), ('Delivered');
 
 -- Insert a Customer Order
-INSERT INTO cust_order (customer_id, shipping_method_id, order_status_id)
+INSERT INTO cust_order (customer_id, shipping_id, order_id)
 VALUES (1, 1, 1);
 
 -- Add Books to Order
